@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>apisafeguardpro</name>
+    </assembly>
+    <members>
+        <member name="M:apisafeguardpro.Controllers.ColaboradorController.GetColaboradors">
+            <summary>
+            Retorna os cadastros existentes
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Get do cadastro os dados retornados serão
+                {
+                    "colaborador_cod": "codigo do colaborador";
+                    "nome_colab": "Nome do colaborador";
+                    "cpf": "cpf do colaborador";
+                    "telefone": "telefone do colaborador";
+                    "data_admissao": "data de admissao do colaborador";
+                    "email": "e-mail do colaborador;
+                    "ctps": "ctps do colaborador";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso ao retorno dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.ColaboradorController.GetColaborador(System.Int32)">
+            <summary>
+            Retorna dados do cadastro do id informado
+            </summary>
+            /// <remarks>
+            Sample request:
+            
+                Get do cadastro os dados retornados serão
+                {
+                    "colaborador_cod": "codigo do colaborador";
+                    "nome_colab": "Nome do colaborador";
+                    "cpf": "cpf do colaborador";
+                    "telefone": "telefone do colaborador";
+                    "data_admissao": "data de admissao do colaborador";
+                    "email": "e-mail do colaborador;
+                    "ctps": "ctps do colaborador";
+                 }
+                 
+            </remarks>
+            /// <response code="200">Sucesso ao retorno dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.ColaboradorController.PutColaborador(System.Int32,apisafeguardpro.Models.Colaborador)">
+            <summary>
+            Alteração conforme dados passados para o id informado
+            </summary>
+            /// <remarks>
+            Sample request:
+            
+                put do cadastro, voce deve informar os valores conforme no exemplo abaixo:
+                {
+                    "colaborador_cod": "codigo do colaborador";
+                    "nome_colab": "Nome do colaborador";
+                    "cpf": "cpf do colaborador";
+                    "telefone": "telefone do colaborador";
+                    "data_admissao": "data de admissao do colaborador";
+                    "email": "e-mail do colaborador;
+                    "ctps": "ctps do colaborador";
+                 }
+                 
+            </remarks>
+            /// <response code="200">Sucesso ao alterar dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.ColaboradorController.PostColaborador(apisafeguardpro.Models.Colaborador)">
+            <summary>
+            Cadastrar os dados informados
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Post do cadastro, voce deve informar os valores conforme no exemplo abaixo:
+                {
+                    "colaborador_cod": "codigo do colaborador";
+                    "nome_colab": "Nome do colaborador";
+                    "cpf": "cpf do colaborador";
+                    "telefone": "telefone do colaborador";
+                    "data_admissao": "data de admissao do colaborador";
+                    "email": "e-mail do colaborador;
+                    "ctps": "ctps do colaborador";
+                 }
+                 
+            </remarks>
+            /// <response code="200">Sucesso ao cadastrar dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.ColaboradorController.DeleteColaborador(System.Int32)">
+            <summary>
+            Deletar os dados do id informado
+            </summary>
+            /// <response code="200">Sucesso ao deletar dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EntregaController.GetEntregas">
+            <summary>
+            Retorna os cadastros existentes
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Get do cadastro os dados retornados serão
+                {
+                    "entrega_cod": "codigo da entrega";
+                    "colaborador_cod": "Codigo do colaborador";
+                    "data_validade": "data de validade da entrega";
+                    "data_entrega": "data da entrega";
+                    "epi_cod": "codigo de epi";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso ao retorno dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EntregaController.GetEntrega(System.Int32)">
+            <summary>
+            Retorna os cadastros existentes
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Get do cadastro os dados retornados serão
+                {
+                    "entrega_cod": "codigo da entrega";
+                    "colaborador_cod": "Codigo do colaborador";
+                    "data_validade": "data de validade da entrega";
+                    "data_entrega": "data da entrega";
+                    "epi_cod": "codigo de epi";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso ao retorno dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EntregaController.PutEntrega(System.Int32,apisafeguardpro.Models.Entrega)">
+            <summary>
+            Altera os dados existentes
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Put do cadastro os dados alterados serão
+                {
+                    "entrega_cod": "codigo da entrega";
+                    "colaborador_cod": "Codigo do colaborador";
+                    "data_validade": "data de validade da entrega";
+                    "data_entrega": "data da entrega";
+                    "epi_cod": "codigo de epi";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso a alteração dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EntregaController.PostEntrega(apisafeguardpro.Models.Entrega)">
+            <summary>
+            Cadastra os dados informados
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Post do cadastro, os dados cadastrados serão
+                {
+                    "entrega_cod": "codigo da entrega";
+                    "colaborador_cod": "Codigo do colaborador";
+                    "data_validade": "data de validade da entrega";
+                    "data_entrega": "data da entrega";
+                    "epi_cod": "codigo de epi";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso ao cadastrar dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EntregaController.DeleteEntrega(System.Int32)">
+            <summary>
+            Deleta os cadastros existentes
+            </summary>
+            <response code="200">Sucesso ao deletar os dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EpiController.GetEpis">
+            <summary>
+            Retorna os cadastros existentes
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Get do cadastro os dados retornados serão
+                {
+                    "epi_cod": "codigo de epi";
+                    "colaborador_cod": "codigo do colaborador";
+                    "nome": "nome do EPI";
+                    "forma_adequada": "forma adequada para usar o EPI";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso ao retorno dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EpiController.GetEpi(System.Int32)">
+            <summary>
+            Retorna os cadastros existentes
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Get do cadastro, os dados retornados por Id serão
+                {
+                    "epi_cod": "codigo de epi";
+                    "colaborador_cod": "codigo do colaborador";
+                    "nome": "nome do EPI";
+                    "forma_adequada": "forma adequada para usar o EPI";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso ao retorno dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EpiController.PutEpi(System.Int32,apisafeguardpro.Models.Epi)">
+            <summary>
+            Altera os dados existentes
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Put do cadastro, os dados alterados serão
+                {
+                    "epi_cod": "codigo de epi";
+                    "colaborador_cod": "codigo do colaborador";
+                    "nome": "nome do EPI";
+                    "forma_adequada": "forma adequada para usar o EPI";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso ao alterar os dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EpiController.PostEpi(apisafeguardpro.Models.Epi)">
+            <summary>
+            Cadastra de novos dados
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Post do cadastro, os dados cadastrados serão
+                {
+                    "epi_cod": "codigo de epi";
+                    "colaborador_cod": "codigo do colaborador";
+                    "nome": "nome do EPI";
+                    "forma_adequada": "forma adequada para usar o EPI";
+                 }
+                 
+            </remarks>
+            <response code="200">Sucesso ao cadastrar dos dados</response>
+        </member>
+        <member name="M:apisafeguardpro.Controllers.EpiController.DeleteEpi(System.Int32)">
+            <summary>
+            Deleta os cadastros existentes
+            </summary>
+            <response code="200">Sucesso ao deletar os dados</response>
+        </member>
+    </members>
+</doc>
