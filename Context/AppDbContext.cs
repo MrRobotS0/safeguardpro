@@ -46,15 +46,11 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Cpf).HasColumnName("cpf");
             entity.Property(e => e.Ctps).HasColumnName("ctps");
             entity.Property(e => e.DataAdmissao).HasColumnName("data_admissao");
-            entity.Property(e => e.Email)
-                .HasColumnType("char")
-                .HasColumnName("email");
+            entity.Property(e => e.Email).HasMaxLength(60).HasColumnName("email");
             entity.Property(e => e.NomeColab)
                 .HasMaxLength(100)
                 .HasColumnName("nome_colab");
-            entity.Property(e => e.Telefone)
-                .HasColumnType("char")
-                .HasColumnName("telefone");
+            entity.Property(e => e.Telefone).HasMaxLength(20).HasColumnName("telefone");
         });
 
         modelBuilder.Entity<Entrega>(entity =>

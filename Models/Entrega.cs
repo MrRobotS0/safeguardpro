@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace apisafeguardpro.Models;
 
@@ -14,8 +15,8 @@ public partial class Entrega
     public DateOnly DataEntrega { get; set; }
 
     public int EpiCod { get; set; }
-
-    public virtual Colaborador ColaboradorCodNavigation { get; set; } = null!;
-
-    public virtual Epi EpiCodNavigation { get; set; } = null!;
+[JsonIgnore]
+    public virtual Colaborador? ColaboradorCodNavigation { get; set; }
+[JsonIgnore]
+    public virtual Epi? EpiCodNavigation { get; set; }
 }
