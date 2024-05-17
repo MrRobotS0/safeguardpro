@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using apisafeguardpro.Context;
 using apisafeguardpro.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace apisafeguardpro.Controllers
 {
@@ -38,6 +39,7 @@ namespace apisafeguardpro.Controllers
         /// <response code="200">Sucesso ao retorno dos dados</response>
         // GET: api/Epi
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Epi>>> GetEpis()
         {
           if (_context.Epis == null)
@@ -64,6 +66,7 @@ namespace apisafeguardpro.Controllers
         /// <response code="200">Sucesso ao retorno dos dados</response>
         // GET: api/Epi/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Epi>> GetEpi(int id)
         {
           if (_context.Epis == null)
@@ -98,6 +101,7 @@ namespace apisafeguardpro.Controllers
         // PUT: api/Epi/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize("Admin")]
         public async Task<IActionResult> PutEpi(int id, Epi epi)
         {
             if (id != epi.EpiCod)
@@ -144,6 +148,7 @@ namespace apisafeguardpro.Controllers
         // POST: api/Epi
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize("Admin")]
         public async Task<ActionResult<Epi>> PostEpi(Epi epi)
         {
           if (_context.Epis == null)
@@ -175,6 +180,7 @@ namespace apisafeguardpro.Controllers
         /// <response code="200">Sucesso ao deletar os dados</response>
         // DELETE: api/Epi/5
         [HttpDelete("{id}")]
+        [Authorize("Admin")]
         public async Task<IActionResult> DeleteEpi(int id)
         {
             if (_context.Epis == null)

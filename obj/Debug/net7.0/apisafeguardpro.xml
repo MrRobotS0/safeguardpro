@@ -254,5 +254,17 @@
             </summary>
             <response code="200">Sucesso ao deletar os dados</response>
         </member>
+        <member name="T:apisafeguardpro.Migrations.identity">
+            <inheritdoc />
+        </member>
+        <member name="M:apisafeguardpro.Migrations.identity.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:apisafeguardpro.Migrations.identity.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:apisafeguardpro.Migrations.identity.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

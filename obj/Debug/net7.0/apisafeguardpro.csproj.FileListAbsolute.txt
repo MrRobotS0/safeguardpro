@@ -280,3 +280,7 @@ C:\Users\Aluno Dev\Documents\dev\flutter\apisafeguardpro\obj\Debug\net7.0\apisaf
 C:\Users\Aluno Dev\Documents\dev\flutter\apisafeguardpro\obj\Debug\net7.0\ref\apisafeguardpro.dll
 C:\Users\Aluno Dev\Documents\dev\flutter\apisafeguardpro\bin\Debug\net7.0\apisafeguardpro.xml
 C:\Users\Aluno Dev\Documents\dev\flutter\apisafeguardpro\obj\Debug\net7.0\apisafeguardpro.xml
+C:\Users\Aluno Dev\Documents\dev\flutter\apisafeguardpro\bin\Debug\net7.0\apisafeguardpro.staticwebassets.runtime.json
+C:\Users\Aluno Dev\Documents\dev\flutter\apisafeguardpro\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Aluno Dev\Documents\dev\flutter\apisafeguardpro\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Aluno Dev\Documents\dev\flutter\apisafeguardpro\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll

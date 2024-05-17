@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using apisafeguardpro.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace apisafeguardpro.Context;
 
-public partial class AppDbContext : DbContext
+public partial class AppDbContext : IdentityDbContext<ApplicationUser>
 {
-    public AppDbContext()
-    {
-    }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
@@ -23,9 +21,7 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<Epi> Epis { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=safeguardpro;User Id=postgres;Password=senai901;");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Colaborador>(entity =>
@@ -40,9 +36,7 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.Telefone, "telefone").IsUnique();
 
-            entity.Property(e => e.ColaboradorCod)
-                .ValueGeneratedNever()
-                .HasColumnName("colaborador_cod");
+            entity.Property(e => e.ColaboradorCod).HasColumnName("colaborador_cod");
             entity.Property(e => e.Cpf).HasColumnName("cpf");
             entity.Property(e => e.Ctps).HasColumnName("ctps");
             entity.Property(e => e.DataAdmissao).HasColumnName("data_admissao");
@@ -61,9 +55,7 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.EntregaCod, "idx_entrega_cod");
 
-            entity.Property(e => e.EntregaCod)
-                .ValueGeneratedNever()
-                .HasColumnName("entrega_cod");
+            entity.Property(e => e.EntregaCod).HasColumnName("entrega_cod");
             entity.Property(e => e.ColaboradorCod).HasColumnName("colaborador_cod");
             entity.Property(e => e.DataEntrega).HasColumnName("data_entrega");
             entity.Property(e => e.DataValidade).HasColumnName("data_validade");
@@ -83,14 +75,9 @@ public partial class AppDbContext : DbContext
         modelBuilder.Entity<Epi>(entity =>
         {
             entity.HasKey(e => e.EpiCod).HasName("epi_pkey");
-
             entity.ToTable("epi");
-
             entity.HasIndex(e => e.EpiCod, "idx_epi_cod");
-
-            entity.Property(e => e.EpiCod)
-                .ValueGeneratedNever()
-                .HasColumnName("epi_cod");
+            entity.Property(e => e.EpiCod).HasColumnName("epi_cod");
             entity.Property(e => e.ColaboradorCod).HasColumnName("colaborador_cod");
             entity.Property(e => e.FormaAdequada)
                 .HasMaxLength(200)
@@ -105,7 +92,7 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("colaborador_cod");
         });
 
-        OnModelCreatingPartial(modelBuilder);
+        base.OnModelCreating(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

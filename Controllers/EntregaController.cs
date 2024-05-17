@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using apisafeguardpro.Context;
 using apisafeguardpro.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace apisafeguardpro.Controllers
 {
@@ -39,6 +40,7 @@ namespace apisafeguardpro.Controllers
         /// <response code="200">Sucesso ao retorno dos dados</response>
         // GET: api/Entrega
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Entrega>>> GetEntregas()
         {
           if (_context.Entregas == null)
@@ -66,6 +68,7 @@ namespace apisafeguardpro.Controllers
         /// <response code="200">Sucesso ao retorno dos dados</response>
         // GET: api/Entrega/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Entrega>> GetEntrega(int id)
         {
           if (_context.Entregas == null)
@@ -101,6 +104,7 @@ namespace apisafeguardpro.Controllers
         // PUT: api/Entrega/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize("Admin")]
         public async Task<IActionResult> PutEntrega(int id, Entrega entrega)
         {
             if (id != entrega.EntregaCod)
@@ -148,6 +152,7 @@ namespace apisafeguardpro.Controllers
         // POST: api/Entrega
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize("Admin")]
         public async Task<ActionResult<Entrega>> PostEntrega(Entrega entrega)
         {
           if (_context.Entregas == null)
@@ -179,6 +184,7 @@ namespace apisafeguardpro.Controllers
         /// <response code="200">Sucesso ao deletar os dados</response>
         // DELETE: api/Entrega/5
         [HttpDelete("{id}")]
+        [Authorize("Admin")]
         public async Task<IActionResult> DeleteEntrega(int id)
         {
             if (_context.Entregas == null)
