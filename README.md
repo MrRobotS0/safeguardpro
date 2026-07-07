@@ -1,10 +1,10 @@
 # SafeGuard Pro — API de Controle de EPIs
 
-> ⚠️ **Projeto acadêmico.** Desenvolvido durante meu curso técnico como trabalho de conclusão/prática. O foco era aprender, então tem as marcas de quem estava começando, mas foi onde eu botei a mão na massa com back-end de verdade pela primeira vez.
+> ⚠️ **Projeto acadêmico.** Desenvolvido durante meu curso técnico como trabalho de prática.
 
 ## Sobre
 
-O **SafeGuard Pro** é uma API REST para **gerenciar a entrega e o controle de EPIs** (Equipamentos de Proteção Individual) em uma empresa. A ideia era resolver um problema real do dia a dia: saber **quem recebeu qual equipamento**, **quando** e **até quando ele é válido**, sem depender de planilha solta.
+O **SafeGuard Pro** é uma API REST para **gerenciar a entrega e o controle de EPIs** (Equipamentos de Proteção Individual) em uma empresa. A ideia era resolver um problema real do dia a dia: saber **quem recebeu qual equipamento**, **quando** e **até quando ele é válido**, sem depender de planilha.
 
 Ela cobre o ciclo básico:
 
@@ -15,8 +15,6 @@ Ela cobre o ciclo básico:
 
 ## Tecnologias
 
-Foi aqui que aprendi a stack que usei no projeto:
-
 - **C# / ASP.NET Core** (Web API)
 - **Entity Framework Core** para o acesso ao banco
 - **PostgreSQL** como banco de dados
@@ -25,8 +23,4 @@ Foi aqui que aprendi a stack que usei no projeto:
 
 ## O que eu tirei disso
 
-Mais do que o código em si, esse projeto me ensinou a pensar em **modelagem de dados**, **autenticação**, **organização de uma API** e a documentar o que eu construía. Olhando hoje, com mais experiência, eu faria várias coisas diferente, e é exatamente por isso que ele fica aqui: como um registro de onde eu comecei.
-
----
-
-*Feito com bastante café durante o curso técnico. ☕*
+Esse projeto me ensinou a pensar em **modelagem de dados**, **autenticação**, **organização de uma API** e a documentar o que eu construía. Olhando hoje, com mais experiência, eu faria várias coisas diferente.
