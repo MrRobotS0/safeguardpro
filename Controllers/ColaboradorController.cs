@@ -1,229 +1,176 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using apisafeguardpro.Context;
+using apisafeguardpro.Dtos;
 using apisafeguardpro.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace apisafeguardpro.Controllers
+namespace apisafeguardpro.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ColaboradorController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ColaboradorController : ControllerBase
+    private readonly AppDbContext _context;
+
+    public ColaboradorController(AppDbContext context)
     {
-        private readonly AppDbContext _context;
-
-        public ColaboradorController(AppDbContext context)
-        {
-            _context = context;
-        }
-        /// <summary>
-        /// Retorna os cadastros existentes
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     Get do cadastro os dados retornados serão
-        ///     {
-        ///         "colaborador_cod": "codigo do colaborador";
-        ///         "nome_colab": "Nome do colaborador";
-        ///         "cpf": "cpf do colaborador";
-        ///         "telefone": "telefone do colaborador";
-        ///         "data_admissao": "data de admissao do colaborador";
-        ///         "email": "e-mail do colaborador;
-        ///         "ctps": "ctps do colaborador";
-        ///      }
-        ///      
-        /// </remarks>
-        /// <response code="200">Sucesso ao retorno dos dados</response>
-        // GET: api/Colaborador
-        [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<Colaborador>>> GetColaboradors()
-        {
-          if (_context.Colaboradors == null)
-          {
-              return NotFound();
-          }
-            return await _context.Colaboradors.ToListAsync();
-        }
-        /// <summary>
-        /// Retorna dados do cadastro do id informado
-        /// </summary>
-        /// /// <remarks>
-        /// Sample request:
-        /// 
-        ///     Get do cadastro os dados retornados serão
-        ///     {
-        ///         "colaborador_cod": "codigo do colaborador";
-        ///         "nome_colab": "Nome do colaborador";
-        ///         "cpf": "cpf do colaborador";
-        ///         "telefone": "telefone do colaborador";
-        ///         "data_admissao": "data de admissao do colaborador";
-        ///         "email": "e-mail do colaborador;
-        ///         "ctps": "ctps do colaborador";
-        ///      }
-        ///      
-        /// </remarks>
-        /// /// <response code="200">Sucesso ao retorno dos dados</response>
-        // GET: api/Colaborador/5
-        [HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult<Colaborador>> GetColaborador(int id)
-        {
-          if (_context.Colaboradors == null)
-          {
-              return NotFound();
-          }
-            var colaborador = await _context.Colaboradors.FindAsync(id);
-
-            if (colaborador == null)
-            {
-                return NotFound();
-            }
-
-            return colaborador;
-        }
-        /// <summary>
-        /// Alteração conforme dados passados para o id informado
-        /// </summary>
-        /// /// <remarks>
-        /// Sample request:
-        /// 
-        ///     put do cadastro, voce deve informar os valores conforme no exemplo abaixo:
-        ///     {
-        ///         "colaborador_cod": "codigo do colaborador";
-        ///         "nome_colab": "Nome do colaborador";
-        ///         "cpf": "cpf do colaborador";
-        ///         "telefone": "telefone do colaborador";
-        ///         "data_admissao": "data de admissao do colaborador";
-        ///         "email": "e-mail do colaborador;
-        ///         "ctps": "ctps do colaborador";
-        ///      }
-        ///      
-        /// </remarks>
-        /// /// <response code="200">Sucesso ao alterar dos dados</response>
-        // PUT: api/Colaborador/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        [Authorize("Admin")]
-        public async Task<IActionResult> PutColaborador(int id, Colaborador colaborador)
-        {
-            if (id != colaborador.ColaboradorCod)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(colaborador).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ColaboradorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-        /// <summary>
-        /// Cadastrar os dados informados
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     Post do cadastro, voce deve informar os valores conforme no exemplo abaixo:
-        ///     {
-        ///         "colaborador_cod": "codigo do colaborador";
-        ///         "nome_colab": "Nome do colaborador";
-        ///         "cpf": "cpf do colaborador";
-        ///         "telefone": "telefone do colaborador";
-        ///         "data_admissao": "data de admissao do colaborador";
-        ///         "email": "e-mail do colaborador;
-        ///         "ctps": "ctps do colaborador";
-        ///      }
-        ///      
-        /// </remarks>
-        /// /// <response code="200">Sucesso ao cadastrar dos dados</response>
-        // POST: api/Colaborador
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        [Authorize("Admin")]
-        public async Task<ActionResult<Colaborador>> PostColaborador(Colaborador colaborador)
-        {
-          if (_context.Colaboradors == null)
-          {
-              return Problem("Entity set 'AppDbContext.Colaboradors'  is null.");
-          }
-            _context.Colaboradors.Add(colaborador);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ColaboradorExists(colaborador.ColaboradorCod))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetColaborador", new { id = colaborador.ColaboradorCod }, colaborador);
-        }
-        /// <summary>
-        /// Deletar os dados do id informado
-        /// </summary>
-        /// /// <response code="200">Sucesso ao deletar dos dados</response>
-        // DELETE: api/Colaborador/5
-        [HttpDelete("{id}")]
-        [Authorize("Admin")]
-        public async Task<IActionResult> DeleteColaborador(int id)
-        {
-            if (_context.Colaboradors == null)
-            {
-                return NotFound();
-            }
-            var colaborador = await _context.Colaboradors.FindAsync(id);
-            if (colaborador == null)
-            {
-                return NotFound();
-            }
-
-            _context.Colaboradors.Remove(colaborador);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ColaboradorExists(int id)
-        {
-            return (_context.Colaboradors?.Any(e => e.ColaboradorCod == id)).GetValueOrDefault();
-        }
-
-        [HttpGet("Epis")]
-        [Authorize]
-        public async Task<ActionResult <IEnumerable<Entrega>>> GetEpiColab(int id) {
-            if (_context.Entregas == null) {
-                return NotFound();
-            } else {
-                var epi = await _context.Entregas.Where(e=>e.ColaboradorCod== id).ToListAsync();
-                if (epi == null) {
-                    return NotFound();
-                } else {
-                    return epi;
-                }
-            }
-        }
+        _context = context;
     }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<PagedResult<ColaboradorResponse>>> GetColaboradores([FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+    {
+        if (page < 1)
+        {
+            page = 1;
+        }
+
+        if (pageSize < 1 || pageSize > 100)
+        {
+            pageSize = 20;
+        }
+
+        var query = _context.Colaboradors.AsNoTracking().OrderBy(c => c.ColaboradorCod);
+        var total = await query.CountAsync();
+
+        var items = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(c => new ColaboradorResponse
+            {
+                ColaboradorCod = c.ColaboradorCod,
+                NomeColab = c.NomeColab,
+                Cpf = c.Cpf,
+                Telefone = c.Telefone,
+                DataAdmissao = c.DataAdmissao,
+                Email = c.Email,
+                Ctps = c.Ctps
+            })
+            .ToListAsync();
+
+        return new PagedResult<ColaboradorResponse>
+        {
+            Items = items,
+            Page = page,
+            PageSize = pageSize,
+            TotalCount = total,
+            TotalPages = (int)Math.Ceiling(total / (double)pageSize)
+        };
+    }
+
+    [HttpGet("{id}")]
+    [Authorize]
+    public async Task<ActionResult<ColaboradorResponse>> GetColaborador(int id)
+    {
+        var colaborador = await _context.Colaboradors.AsNoTracking().FirstOrDefaultAsync(c => c.ColaboradorCod == id);
+        if (colaborador is null)
+        {
+            return NotFound();
+        }
+
+        return ToResponse(colaborador);
+    }
+
+    [HttpPost]
+    [Authorize(Policy = "Admin")]
+    public async Task<ActionResult<ColaboradorResponse>> PostColaborador(ColaboradorRequest request)
+    {
+        var colaborador = new Colaborador
+        {
+            NomeColab = request.NomeColab,
+            Cpf = request.Cpf,
+            Telefone = request.Telefone,
+            DataAdmissao = request.DataAdmissao,
+            Email = request.Email,
+            Ctps = request.Ctps
+        };
+
+        _context.Colaboradors.Add(colaborador);
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            return Conflict("Já existe um colaborador com esse CPF ou telefone.");
+        }
+
+        return CreatedAtAction(nameof(GetColaborador), new { id = colaborador.ColaboradorCod }, ToResponse(colaborador));
+    }
+
+    [HttpPut("{id}")]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> PutColaborador(int id, ColaboradorRequest request)
+    {
+        var colaborador = await _context.Colaboradors.FindAsync(id);
+        if (colaborador is null)
+        {
+            return NotFound();
+        }
+
+        colaborador.NomeColab = request.NomeColab;
+        colaborador.Cpf = request.Cpf;
+        colaborador.Telefone = request.Telefone;
+        colaborador.DataAdmissao = request.DataAdmissao;
+        colaborador.Email = request.Email;
+        colaborador.Ctps = request.Ctps;
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> DeleteColaborador(int id)
+    {
+        var colaborador = await _context.Colaboradors.FindAsync(id);
+        if (colaborador is null)
+        {
+            return NotFound();
+        }
+
+        _context.Colaboradors.Remove(colaborador);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    [HttpGet("{id}/entregas")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<EntregaResponse>>> GetEntregasDoColaborador(int id)
+    {
+        var existe = await _context.Colaboradors.AnyAsync(c => c.ColaboradorCod == id);
+        if (!existe)
+        {
+            return NotFound();
+        }
+
+        return await _context.Entregas
+            .AsNoTracking()
+            .Where(e => e.ColaboradorCod == id)
+            .Select(e => new EntregaResponse
+            {
+                EntregaCod = e.EntregaCod,
+                ColaboradorCod = e.ColaboradorCod,
+                EpiCod = e.EpiCod,
+                DataEntrega = e.DataEntrega,
+                DataValidade = e.DataValidade
+            })
+            .ToListAsync();
+    }
+
+    private static ColaboradorResponse ToResponse(Colaborador c) => new()
+    {
+        ColaboradorCod = c.ColaboradorCod,
+        NomeColab = c.NomeColab,
+        Cpf = c.Cpf,
+        Telefone = c.Telefone,
+        DataAdmissao = c.DataAdmissao,
+        Email = c.Email,
+        Ctps = c.Ctps
+    };
 }

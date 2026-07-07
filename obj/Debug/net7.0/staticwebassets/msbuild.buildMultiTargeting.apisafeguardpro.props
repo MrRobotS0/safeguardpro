@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\apisafeguardpro.props" />
-</Project>

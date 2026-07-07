@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace apisafeguardpro.Models;
-public class ApplicationUser : IdentityUser{
-    public decimal Cpf { get; set; }
+
+public class ApplicationUser : IdentityUser
+{
+    public string Cpf { get; set; } = null!;
 }

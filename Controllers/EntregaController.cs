@@ -1,211 +1,152 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using apisafeguardpro.Context;
+using apisafeguardpro.Dtos;
 using apisafeguardpro.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace apisafeguardpro.Controllers
+namespace apisafeguardpro.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class EntregaController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class EntregaController : ControllerBase
+    private readonly AppDbContext _context;
+
+    public EntregaController(AppDbContext context)
     {
-        private readonly AppDbContext _context;
-
-        public EntregaController(AppDbContext context)
-        {
-            _context = context;
-        }
-        /// <summary>
-        /// Retorna os cadastros existentes
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     Get do cadastro os dados retornados serão
-        ///     {
-        ///         "entrega_cod": "codigo da entrega";
-        ///         "colaborador_cod": "Codigo do colaborador";
-        ///         "data_validade": "data de validade da entrega";
-        ///         "data_entrega": "data da entrega";
-        ///         "epi_cod": "codigo de epi";
-        ///      }
-        ///      
-        /// </remarks>
-        /// <response code="200">Sucesso ao retorno dos dados</response>
-        // GET: api/Entrega
-        [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<Entrega>>> GetEntregas()
-        {
-          if (_context.Entregas == null)
-          {
-              return NotFound();
-          }
-            return await _context.Entregas.ToListAsync();
-        }
-        /// <summary>
-        /// Retorna os cadastros existentes
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     Get do cadastro os dados retornados serão
-        ///     {
-        ///         "entrega_cod": "codigo da entrega";
-        ///         "colaborador_cod": "Codigo do colaborador";
-        ///         "data_validade": "data de validade da entrega";
-        ///         "data_entrega": "data da entrega";
-        ///         "epi_cod": "codigo de epi";
-        ///      }
-        ///      
-        /// </remarks>
-        /// <response code="200">Sucesso ao retorno dos dados</response>
-        // GET: api/Entrega/5
-        [HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult<Entrega>> GetEntrega(int id)
-        {
-          if (_context.Entregas == null)
-          {
-              return NotFound();
-          }
-            var entrega = await _context.Entregas.FindAsync(id);
-
-            if (entrega == null)
-            {
-                return NotFound();
-            }
-
-            return entrega;
-        }
-        /// <summary>
-        /// Altera os dados existentes
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     Put do cadastro os dados alterados serão
-        ///     {
-        ///         "entrega_cod": "codigo da entrega";
-        ///         "colaborador_cod": "Codigo do colaborador";
-        ///         "data_validade": "data de validade da entrega";
-        ///         "data_entrega": "data da entrega";
-        ///         "epi_cod": "codigo de epi";
-        ///      }
-        ///      
-        /// </remarks>
-        /// <response code="200">Sucesso a alteração dos dados</response>
-        // PUT: api/Entrega/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        [Authorize("Admin")]
-        public async Task<IActionResult> PutEntrega(int id, Entrega entrega)
-        {
-            if (id != entrega.EntregaCod)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(entrega).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EntregaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-        /// <summary>
-        /// Cadastra os dados informados
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     Post do cadastro, os dados cadastrados serão
-        ///     {
-        ///         "entrega_cod": "codigo da entrega";
-        ///         "colaborador_cod": "Codigo do colaborador";
-        ///         "data_validade": "data de validade da entrega";
-        ///         "data_entrega": "data da entrega";
-        ///         "epi_cod": "codigo de epi";
-        ///      }
-        ///      
-        /// </remarks>
-        /// <response code="200">Sucesso ao cadastrar dos dados</response>
-        // POST: api/Entrega
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        [Authorize("Admin")]
-        public async Task<ActionResult<Entrega>> PostEntrega(Entrega entrega)
-        {
-          if (_context.Entregas == null)
-          {
-              return Problem("Entity set 'AppDbContext.Entregas'  is null.");
-          }
-            _context.Entregas.Add(entrega);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (EntregaExists(entrega.EntregaCod))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetEntrega", new { id = entrega.EntregaCod }, entrega);
-        }
-        /// <summary>
-        /// Deleta os cadastros existentes
-        /// </summary>
-        /// <response code="200">Sucesso ao deletar os dados</response>
-        // DELETE: api/Entrega/5
-        [HttpDelete("{id}")]
-        [Authorize("Admin")]
-        public async Task<IActionResult> DeleteEntrega(int id)
-        {
-            if (_context.Entregas == null)
-            {
-                return NotFound();
-            }
-            var entrega = await _context.Entregas.FindAsync(id);
-            if (entrega == null)
-            {
-                return NotFound();
-            }
-
-            _context.Entregas.Remove(entrega);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool EntregaExists(int id)
-        {
-            return (_context.Entregas?.Any(e => e.EntregaCod == id)).GetValueOrDefault();
-        }
+        _context = context;
     }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<PagedResult<EntregaResponse>>> GetEntregas([FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+    {
+        if (page < 1)
+        {
+            page = 1;
+        }
+
+        if (pageSize < 1 || pageSize > 100)
+        {
+            pageSize = 20;
+        }
+
+        var query = _context.Entregas.AsNoTracking().OrderBy(e => e.EntregaCod);
+        var total = await query.CountAsync();
+
+        var items = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(e => new EntregaResponse
+            {
+                EntregaCod = e.EntregaCod,
+                ColaboradorCod = e.ColaboradorCod,
+                EpiCod = e.EpiCod,
+                DataEntrega = e.DataEntrega,
+                DataValidade = e.DataValidade
+            })
+            .ToListAsync();
+
+        return new PagedResult<EntregaResponse>
+        {
+            Items = items,
+            Page = page,
+            PageSize = pageSize,
+            TotalCount = total,
+            TotalPages = (int)Math.Ceiling(total / (double)pageSize)
+        };
+    }
+
+    [HttpGet("{id}")]
+    [Authorize]
+    public async Task<ActionResult<EntregaResponse>> GetEntrega(int id)
+    {
+        var entrega = await _context.Entregas.AsNoTracking().FirstOrDefaultAsync(e => e.EntregaCod == id);
+        if (entrega is null)
+        {
+            return NotFound();
+        }
+
+        return ToResponse(entrega);
+    }
+
+    [HttpPost]
+    [Authorize(Policy = "Admin")]
+    public async Task<ActionResult<EntregaResponse>> PostEntrega(EntregaRequest request)
+    {
+        var colaboradorExiste = await _context.Colaboradors.AnyAsync(c => c.ColaboradorCod == request.ColaboradorCod);
+        var epiExiste = await _context.Epis.AnyAsync(e => e.EpiCod == request.EpiCod);
+
+        if (!colaboradorExiste || !epiExiste)
+        {
+            return BadRequest("Colaborador ou EPI informado não existe.");
+        }
+
+        var entrega = new Entrega
+        {
+            ColaboradorCod = request.ColaboradorCod,
+            EpiCod = request.EpiCod,
+            DataEntrega = request.DataEntrega,
+            DataValidade = request.DataValidade
+        };
+
+        _context.Entregas.Add(entrega);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetEntrega), new { id = entrega.EntregaCod }, ToResponse(entrega));
+    }
+
+    [HttpPut("{id}")]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> PutEntrega(int id, EntregaRequest request)
+    {
+        var entrega = await _context.Entregas.FindAsync(id);
+        if (entrega is null)
+        {
+            return NotFound();
+        }
+
+        var colaboradorExiste = await _context.Colaboradors.AnyAsync(c => c.ColaboradorCod == request.ColaboradorCod);
+        var epiExiste = await _context.Epis.AnyAsync(e => e.EpiCod == request.EpiCod);
+
+        if (!colaboradorExiste || !epiExiste)
+        {
+            return BadRequest("Colaborador ou EPI informado não existe.");
+        }
+
+        entrega.ColaboradorCod = request.ColaboradorCod;
+        entrega.EpiCod = request.EpiCod;
+        entrega.DataEntrega = request.DataEntrega;
+        entrega.DataValidade = request.DataValidade;
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> DeleteEntrega(int id)
+    {
+        var entrega = await _context.Entregas.FindAsync(id);
+        if (entrega is null)
+        {
+            return NotFound();
+        }
+
+        _context.Entregas.Remove(entrega);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    private static EntregaResponse ToResponse(Entrega e) => new()
+    {
+        EntregaCod = e.EntregaCod,
+        ColaboradorCod = e.ColaboradorCod,
+        EpiCod = e.EpiCod,
+        DataEntrega = e.DataEntrega,
+        DataValidade = e.DataValidade
+    };
 }
